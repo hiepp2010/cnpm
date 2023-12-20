@@ -48,7 +48,7 @@ export default function NavBar() {
               <div class="flex flex-shrink-0 items-center">
                 <img
                   class="h-8 w-auto"
-                  src="https://upload.wikimedia.org/wikipedia/commons/a/a7/Denso_logo.svg"
+                  src="https://upload.wikimedia.org/wikipedia/commons/a/a1/Logo_Hust.png"
                   alt="Your Company"
                 />
               </div>

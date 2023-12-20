@@ -2,34 +2,42 @@
 import Image from 'next/image'
 import { useState } from 'react';
 
-const YearSelector = () => {
-  const [selectedYear, setSelectedYear] = useState('');
-
+const YearSelector = (props) => {
+  //const [selectedYear, setSelectedYear] = useState('');
+  const {setSelectedYear,setSelectedId}=props
   const handleYearChange = (event) => {
     setSelectedYear(event.target.value);
   };
-
+  const handleInputChange=(event)=>{
+    setSelectedId(event.target.value)
+  }
+   const options=[1,2,3,4,5];
   return (
-    <div className="flex items-center">
-      <label htmlFor="year" className="mr-2">Select a year:</label>
-      <select
-        id="year"
-        value={selectedYear}
-        onChange={handleYearChange}
-        className="border border-gray-300 py-2 px-3 rounded-md"
-      >
-        <option value="">-- Select Year --</option>
-        <option value="2021">2021</option>
-        <option value="2022">2022</option>
-        <option value="2023">2023</option>
-        {/* Add more options for other years */}
+    <div className="flex items-center justify-between">
+      <select className="p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500" onChange={handleYearChange}>
+      {options.map((option, index) => (
+          <option key={index} value={option}>
+            {option}
+          </option>
+      ))}
       </select>
-      {selectedYear && <p className="ml-2">You selected: {selectedYear}</p>}
+      <div className="flex items-center">
+        <input
+          type="text"
+          placeholder="Search..."
+          className="p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          onChange={handleInputChange}
+        />
+        <button className="ml-2 px-4 py-2 bg-blue-500 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+          Search
+        </button>
+      </div>
     </div>
   );
 };
 
-const Table = () => {
+const Table = (props) => {
+  const {selectedId,selectedYear}=props
   const data = [
     {
       id:"1",
@@ -37,7 +45,8 @@ const Table = () => {
       address: 'john.doe@example.com',
       money:123,
       moneyPayed:100,
-      note:" "
+      note:" ",
+      year:1
     },
     {
       id:"2",
@@ -45,7 +54,8 @@ const Table = () => {
       address: 'john.doe@example.com',
       money:100,
       moneyPayed:100,
-      note:"Thu đủ "    },
+      note:"Thu đủ ",
+      year:2    },
   ];
 
   return (
@@ -57,19 +67,21 @@ const Table = () => {
           <th className="border py-2 px-4 border-b">Địa chỉ</th>
           <th className="border py-2 px-4 border-b">Số tiền cần đóng</th>
           <th className="border py-2 px-4 border-b">Đã thu</th>
-          <th className="border py-2 px-4 border-b">Ghi chú</th>
+          <th className="border py-2 px-4 border-b">Chi tiết</th>
         </tr>
       </thead>
       <tbody>
         {data.map((row, index) => (
+          row.year==selectedYear?(row.id.includes(selectedId)?
           < tr key={index}>
             <td className="border py-2 px-4 border-b">{row.id}</td>
             <td className="border py-2 px-4 border-b">{row.name}</td>
             <td className="border py-2 px-4 border-b">{row.address}</td>
             <td className="border py-2 px-4 border-b">{row.money}</td>
             <td className="border py-2 px-4 border-b">{row.moneyPayed}</td>
-            <td className="border py-2 px-4 border-b">{row.note}</td>
-          </tr>
+            <td className="border py-2 px-4 border-b"><a href="./thuPhi/1">Thu</a>{row.note}</td>
+          </tr>:""):""
+
         ))}
       </tbody>
     </table>
@@ -78,10 +90,12 @@ const Table = () => {
 
 
 export default function Home() {
+  const [selectedYear,setSelectedYear]=useState(1)
+  const [selectedId,setSelectedId]=useState("")
   return (
     <div>
-    <YearSelector/>
-    <Table/>
+    <YearSelector setSelectedYear={setSelectedYear} setSelectedId={setSelectedId} />
+    <Table selectedYear={selectedYear} selectedId={selectedId} />
     </div>
   )
 }
