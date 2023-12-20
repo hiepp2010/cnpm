@@ -12,6 +12,7 @@ const YearSelector = (props) => {
     setSelectedId(event.target.value)
   }
    const options=[1,2,3,4,5];
+   // api tất cả những đợt nộp đã diễn ra 
   return (
     <div className="flex items-center justify-between">
       <select className="p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500" onChange={handleYearChange}>
@@ -57,7 +58,7 @@ const Table = (props) => {
       note:"Thu đủ ",
       year:2    },
   ];
-
+  //api 
   return (
     <table className="border-collapse border min-w-full bg-white border border-gray-300">
       <thead>
